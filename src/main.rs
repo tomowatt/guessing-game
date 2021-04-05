@@ -11,8 +11,22 @@ struct Cli {
     difficulty: String,
 }
 
-fn print_difficulty(difficulty: &str) {
-    println!("Playing on: {}", difficulty);
+#[test]
+fn test_print_difficulty_empty() {
+    let mut result = Vec::new();
+    print_difficulty("", &mut result);
+    assert_eq!(result, b"Playing on: \n");
+}
+
+#[test]
+fn test_print_difficulty() {
+    let mut result = Vec::new();
+    print_difficulty("easy", &mut result);
+    assert_eq!(result, b"Playing on: easy\n");
+}
+
+fn print_difficulty(difficulty: &str, mut writer: impl std::io::Write) {
+    writeln!(writer, "Playing on: {}", difficulty);
 }
 
 fn main() {
@@ -22,19 +36,19 @@ fn main() {
 
     let difficulty = match &args.difficulty as &str {
         "easy" => {
-            print_difficulty(&args.difficulty);
+            print_difficulty(&args.difficulty, &mut std::io::stdout());
             (10, 101)
         }
         "medium" => {
-            print_difficulty(&args.difficulty);
+            print_difficulty(&args.difficulty, &mut std::io::stdout());
             (5, 201)
         }
         "hard" => {
-            print_difficulty(&args.difficulty);
+            print_difficulty(&args.difficulty, &mut std::io::stdout());
             (3, 301)
         }
         _ => {
-            print_difficulty("easy");
+            print_difficulty("easy", &mut std::io::stdout());
             (10, 101)
         }
     };
