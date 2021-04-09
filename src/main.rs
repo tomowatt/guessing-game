@@ -6,30 +6,15 @@ use structopt::StructOpt;
 mod utils;
 use utils::*;
 
+#[cfg(test)]
+mod tests;
+
 /// Set Difficulty via CLI
 #[derive(StructOpt)]
 struct Cli {
     /// Difficulty of the Game: "easy", "medium", "hard"
     #[structopt(default_value = "easy", long)]
     difficulty: String,
-}
-
-#[test]
-fn test_print_difficulty_empty() {
-    let mut result = Vec::new();
-    print_difficulty("", &mut result);
-    assert_eq!(result, b"Playing on: \n");
-}
-
-#[test]
-fn test_print_difficulty() {
-    let mut result = Vec::new();
-    print_difficulty("easy", &mut result);
-    assert_eq!(result, b"Playing on: easy\n");
-}
-
-fn print_difficulty(difficulty: &str, mut writer: impl std::io::Write) {
-    writeln!(writer, "Playing on: {}", difficulty);
 }
 
 fn main() {
