@@ -3,6 +3,9 @@ use std::cmp::Ordering;
 use std::io;
 use structopt::StructOpt;
 
+mod utils;
+use utils::*;
+
 /// Set Difficulty via CLI
 #[derive(StructOpt)]
 struct Cli {
